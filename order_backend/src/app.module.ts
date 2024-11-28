@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderStatusListenerService } from './services/order-status-listener.service';
-import { DataService } from './services/data.service';import { Menu } from './entities/Menu';
+import { DataService } from './services/data.service';
 import { Order } from './entities/Order';
 import { User } from './entities/User';
+import { Menu } from './entities/Menu';
 
 
 
@@ -19,6 +20,7 @@ import { User } from './entities/User';
       password: '948621223',
       database: 'postgres',
       autoLoadEntities: true,
+      logging: true,
       //synchronize: true, 
     }),
     TypeOrmModule.forFeature([Menu, Order, User])
