@@ -1,7 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { OrderStatusListenerService } from './services/order-status-listener.service';
+import { DataService } from './services/data.service';import { Menu } from './entities/Menu';
+import { Order } from './entities/Order';
+import { User } from './entities/User';
+
+
 
 
 @Module({
@@ -15,9 +20,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: 'postgres',
       autoLoadEntities: true,
       //synchronize: true, 
-    })
+    }),
+    TypeOrmModule.forFeature([Menu, Order, User])
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [OrderStatusListenerService, DataService],
 })
 export class AppModule {}

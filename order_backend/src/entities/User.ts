@@ -15,6 +15,6 @@ export class User {
     @Column({ type: 'enum', enum: ['USER', 'ADMIN', 'DISPLAY'] })
     role: 'USER' | 'ADMIN' | 'DISPLAY';
 
-    @OneToMany(() => Order, (order) => order.created_by, { cascade: true })
+    @OneToMany(() => Order, (order) => order.created_by)
     orders: Order[];
 }

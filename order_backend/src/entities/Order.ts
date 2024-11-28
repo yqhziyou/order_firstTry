@@ -18,6 +18,9 @@ export class Order {
 
     @Column({ type: 'decimal', precision: 12, scale: 2 })
     total_price: number;
+    
+    @Column({ type: 'int'})
+    amount: number;
 
     @Column({ type: 'text', nullable: true })
     note: string | null;
@@ -26,7 +29,7 @@ export class Order {
     @JoinColumn({ name: 'created_by' })
     created_by: User;
 
-    @ManyToOne(() => Menu, (menu) => menu.orders, { onDelete: 'CASCADE' })
+    @ManyToOne(() => Menu, (menu) => menu.orders, { onDelete: 'SET NULL' })
     @JoinColumn({ name: 'menu_id' })
-    menu: Menu;
+    item_id: Menu;
 }
