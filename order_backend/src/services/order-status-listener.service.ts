@@ -3,6 +3,8 @@ import { Client } from 'pg';
 import { Server } from 'socket.io';
 import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { DataService } from './data.service'; // 导入 DataService
+import { UpdateOrderStatusDto } from "../dto/create-user.dto";
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 @WebSocketGateway({ cors: true })
@@ -43,10 +45,9 @@ export class OrderStatusListenerService implements OnModuleInit {
                 try {
                     const payload = JSON.parse(msg.payload);
                     console.log('Order Status Changed:', payload);
-
-                    // 调用 DataService 更新订单状态
-                    const { orderId, status } = payload;
-                    await this.dataService.updateOrderStatus(orderId, status);
+                    const updateOrderStatusDto = plainToInstance(UpdateOrderStatusDto, payload);
+                    
+                    await this.dataService.updateOrderStatus(updateOrderStatusDto);
 
                     // 推送到 WebSocket 客户端
                     this.server.emit('orderStatusChange', payload);
