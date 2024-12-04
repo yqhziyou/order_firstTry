@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import Config from '../config.json';
 
 const LoginScreen = ({ navigation }: { navigation: any }) => {
-    const [email, setEmail] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleLogin = async () => {
-        if (!email || !password) {
-            Alert.alert('Error', 'Please enter both email and password');
+        if (!userName || !password) {
+            Alert.alert('Error', 'Please enter both username and password');
             return;
         }
 
@@ -16,12 +17,12 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
 
         try {
             // 假设 POST 请求登录
-            const response = await fetch('https://your-api-endpoint.com/login', {
+            const response = await fetch(`${Config.apiUrl}/userManagement/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ user_name: userName, user_pwd: password }),
             });
 
             const data = await response.json();
@@ -31,7 +32,7 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
                 // 使用 navigation 跳转到 HomeScreen
                 navigation.navigate('HomeScreen'); // 修改为你实际的主页面
             } else {
-                Alert.alert('Login Failed', data.message || 'Invalid email or password');
+                Alert.alert('Login Failed', data.message || 'Invalid username or password');
             }
         } catch (error) {
             Alert.alert('Error', 'Something went wrong. Please try again.');
@@ -46,11 +47,10 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
 
             <TextInput
                 style={styles.input}
-                placeholder="Email"
-                keyboardType="email-address"
+                placeholder="Username"
                 autoCapitalize="none"
-                value={email}
-                onChangeText={setEmail}
+                value={userName}
+                onChangeText={setUserName}
             />
 
             <TextInput

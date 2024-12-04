@@ -15,6 +15,13 @@ export class ManagementController {
         return { message:' item on menu has been created successfully!', data:result }
     }
     
+    @Get('getMenu')
+    async getMenu() {
+        console.log("Getting menu(controller)");
+        const result = await this.menuManager.getMenu();
+        return { message:' item on menu has been get successfully!', data:result }
+    }
+    
     @Post('updateItem')
     async updateItem(@Body() menu: MenuDto) {
         console.log('DTO result: ',menu);

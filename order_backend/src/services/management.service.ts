@@ -101,8 +101,7 @@ export class MenuService {
 
     async createItem(menu: MenuDto): Promise<Menu> {
         const { item_id, item_name, price } = menu;
-
-        // 检查是否已存在
+        
         const existingItem = await this.menuRepository.findOne({ where: { item_id } });
         if (existingItem) {
             throw new Error("Item already exists");
@@ -117,6 +116,10 @@ export class MenuService {
         return await this.menuRepository.save(newItem);
     }
 
+    async getMenu(): Promise<Menu[]> {
+        return this.menuRepository.find();
+    }
+    
     async updateItem(menu: MenuDto): Promise<Menu> {
         const { item_id, item_name, price } = menu;
 
