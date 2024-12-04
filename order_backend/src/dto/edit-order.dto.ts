@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsInt, Min, Max, IsEnum } from 'class-validator';
 
 export class CreateOrderDto {
+    @IsNotEmpty()
     @IsInt()
     @Min(1)
     create_by: number; // 创建用户ID

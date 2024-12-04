@@ -1,13 +1,13 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import { Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/User';
 import { Order } from '../entities/Order';
 import { Menu } from "../entities/Menu";
-import { CreateOrderDto, DeleteOrderDto, UpdateOrderStatusDto } from "../dto/create-user.dto";
+import { CreateOrderDto, DeleteOrderDto, UpdateOrderStatusDto } from "../dto/edit-order.dto";
 
 @Injectable()
-export class DataService {
+export class OrderService {
     constructor(
         @InjectRepository(Order)
         private orderRepository: Repository<Order>,
@@ -23,7 +23,7 @@ export class DataService {
         const user = await this.userRepository.findOne({ where: { user_id: create_by } });
         if (!user) throw new NotFoundException(`User with id ${create_by} not found`);
         
-        const menu = await this.menuRepository.findOne({ where: { item: item_id } });
+        const menu = await this.menuRepository.findOne({ where: { item_id: item_id } });
         if (!menu) throw new NotFoundException(`Menu with id ${item_id} not found`);
         
         
@@ -48,7 +48,7 @@ export class DataService {
         
         order.status = status;
         
-        return this.orderRepository.save(order);
+        return await this.orderRepository.save(order);
     }
     
     async deleteOrder (deleteOrderDTO: DeleteOrderDto): Promise<void> {
@@ -60,6 +60,8 @@ export class DataService {
         
         await this.orderRepository.delete(orderId);
     }
+    
+    
     
 }
 

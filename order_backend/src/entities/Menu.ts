@@ -4,7 +4,7 @@ import { Order } from './Order';
 @Entity('menu')
 export class Menu {
     @PrimaryGeneratedColumn()
-    item: number;
+    item_id: number;
 
     @Column({ type: 'varchar', length: 50 })
     item_name: string;

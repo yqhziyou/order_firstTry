@@ -2,8 +2,8 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Client } from 'pg';
 import { Server } from 'socket.io';
 import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
-import { DataService } from './data.service'; // 导入 DataService
-import { UpdateOrderStatusDto } from "../dto/create-user.dto";
+import { OrderService } from './order.service'; // 导入 OrderService
+import { UpdateOrderStatusDto } from "../dto/edit-order.dto";
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class OrderStatusListenerService implements OnModuleInit {
     @WebSocketServer()
     private server: Server;
 
-    constructor(private readonly dataService: DataService) {} // 注入 DataService
+    constructor(private readonly dataService: OrderService) {} // 注入 OrderService
 
     async onModuleInit() {
         try {

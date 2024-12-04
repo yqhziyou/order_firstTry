@@ -1,10 +1,10 @@
 import {Body, Controller, Get, Post} from '@nestjs/common';
-import { DataService } from './services/data.service';
-import { CreateOrderDto, UpdateOrderStatusDto, DeleteOrderDto } from "./dto/create-user.dto";
+import { OrderService } from './services/order.service';
+import { CreateOrderDto, UpdateOrderStatusDto, DeleteOrderDto } from "./dto/edit-order.dto";
 
 @Controller('app')
 export class AppController {
-  constructor(private readonly dataService: DataService) {}
+  constructor(private readonly dataService: OrderService) {}
 
   @Post('create')
   async create(@Body() createOrderDto: CreateOrderDto) {
